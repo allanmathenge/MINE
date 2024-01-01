@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import LoginProfile from "../assets/login-animation.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { imageToBase64 } from "../utility/imageToBase64";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [data, setData] = useState({
@@ -13,6 +15,7 @@ const SignUp = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    image: "",
   });
 
   const handleShowPassword = () => {
@@ -33,6 +36,17 @@ const SignUp = () => {
     });
   };
 
+  const handleUploadProfileImage = async (e) => {
+    const data = await imageToBase64(e.target.files[0]);
+
+    setData((prev) => {
+      return {
+        ...prev,
+        image: data,
+      };
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -41,6 +55,7 @@ const SignUp = () => {
     if (firstName && email && password && confirmPassword) {
       if (password === confirmPassword) {
         alert(`Welcome ${firstName}`);
+        navigate("/login");
       } else {
         alert("Password and confirm password do not match");
       }
@@ -48,13 +63,29 @@ const SignUp = () => {
       alert("Please enter the required fields");
     }
   };
-  console.log(data);
 
   return (
     <div className="p-3 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex  flex-col p-2">
-        <div className="w-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto">
-          <img src={LoginProfile} alt="Login Profile" className="w-full" />
+        <div className="w-20 h-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto relative">
+          <img
+            src={data.image ? data.image : LoginProfile}
+            alt="Login Profile"
+            className="w-full h-full object-cover"
+          />
+
+          <label htmlFor="profileImage">
+            <div className="absolute bottom-0 h-2/7 bg-slate-500 w-full text-center opacity-70 text-white cursor-pointer">
+              <p className="text-sm p-1">Upload</p>
+            </div>
+            <input
+              type={"file"}
+              accept="image/*"
+              id="profileImage"
+              className="hidden"
+              onChange={handleUploadProfileImage}
+            />
+          </label>
         </div>
 
         <form
