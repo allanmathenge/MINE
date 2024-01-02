@@ -5,9 +5,14 @@ import { FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRedux } from "../redux/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state);
+
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -50,10 +55,13 @@ const Login = () => {
       toast(dataRes.message);
 
       if (dataRes.alert) {
+        dispatch(loginRedux(dataRes));
         setTimeout(() => {
-          navigate("/");
+          /* navigate("/") */
         }, 1000);
       }
+
+      console.log(userData);
     } else {
       alert("Please enter the required fields");
     }
