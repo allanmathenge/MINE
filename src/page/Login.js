@@ -3,8 +3,11 @@ import LoginProfile from "../assets/login-animation.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -25,13 +28,32 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { email, password } = data;
 
     if (email && password) {
-      alert("Welcome to the top chicken vendors");
+      const fetchData = await fetch(
+        `${process.env.REACT_APP_SERVER_DOMAIN}/login`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const dataRes = await fetchData.json();
+
+      toast(dataRes.message);
+
+      if (dataRes.alert) {
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
     } else {
       alert("Please enter the required fields");
     }
