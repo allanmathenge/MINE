@@ -1,13 +1,24 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ChickenLogo from "../assets/icons/chicken.svg";
-import { FaRegCircleUser } from "react-icons/fa6";
+import { FaRegUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutRedux } from "../redux/userSlice";
+import { toast } from "react-hot-toast";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const userData = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   const handleShowMenu = () => {
     setShowMenu((prev) => !prev);
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutRedux());
+    toast("Logout successful!");
   };
 
   return (
@@ -40,17 +51,34 @@ const Header = () => {
             className="text-slate-600 cursor-pointer"
             onClick={handleShowMenu}
           >
-            <div className="text-3xl">
-              <FaRegCircleUser />
+            <div className=" w-8 h-8 rounded-full overflow-hidden drop-shadow-md object-contain">
+              {userData.image ? (
+                <img
+                  src={userData.image}
+                  alt="User profile"
+                  className="w-full h-full"
+                />
+              ) : (
+                <FaRegUser className="text-3xl" />
+              )}
             </div>
             {showMenu && (
-              <div className="absolute right-2 bg-white py-2 px-2 shadow drop-shadow-md flex flex-col">
-                <Link to={"newproduct"} className="whitespace-nowrap">
+              <div className="absolute right-2 bg-white py-2 shadow drop-shadow-md flex flex-col">
+                <Link to={"newproduct"} className="whitespace-nowrap px-2">
                   New product
                 </Link>
-                <Link to={"login"} className="whitespace-nowrap">
-                  Login
-                </Link>
+                {userData.image ? (
+                  <p
+                    className="text-white bg-red-400 px-2"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </p>
+                ) : (
+                  <Link to={"login"} className="whitespace-nowrap px-2">
+                    Login
+                  </Link>
+                )}
               </div>
             )}
           </div>

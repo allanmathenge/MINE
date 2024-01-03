@@ -57,7 +57,7 @@ const Login = () => {
       if (dataRes.alert) {
         dispatch(loginRedux(dataRes));
         setTimeout(() => {
-          /* navigate("/") */
+          navigate("/");
         }, 1000);
       }
 
