@@ -64,15 +64,18 @@ const Header = () => {
             </div>
             {showMenu && (
               <div className="absolute right-2 bg-white py-2 shadow drop-shadow-md flex flex-col">
-                <Link to={"newproduct"} className="whitespace-nowrap px-2">
-                  New product
-                </Link>
+                {userData.email === process.env.REACT_APP_ADMIN_EMAIL && (
+                  <Link to={"newproduct"} className="whitespace-nowrap px-2">
+                    New product
+                  </Link>
+                )}
+
                 {userData.image ? (
                   <p
                     className="text-white bg-red-400 px-2"
                     onClick={handleLogout}
                   >
-                    Logout
+                    Logout ({userData.firstName})
                   </p>
                 ) : (
                   <Link to={"login"} className="whitespace-nowrap px-2">
