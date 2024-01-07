@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import HomeCard from "../component/HomeCard";
 import { useSelector } from "react-redux";
 import CardFeature from "../component/CardFeature";
+import FilteredProducts from "../component/FilteredProducts";
 import { GrPrevious, GrNext } from "react-icons/gr";
 
 const Home = () => {
@@ -111,6 +112,19 @@ const Home = () => {
             : loadingArrayFeature.map((el, index) => (
                 <CardFeature key={index} loading="Loading..." />
               ))}
+        </div>
+      </div>
+
+      <div className="my-5">
+        <h2 className="font-bold text-2xl text-slate-800 mb-4">
+          Available Now
+        </h2>
+
+        <div className="flex gap-4 justify-center">
+          <FilteredProducts category="Kienyenji" />
+          <FilteredProducts />
+          <FilteredProducts />
+          <FilteredProducts />
         </div>
       </div>
     </div>
