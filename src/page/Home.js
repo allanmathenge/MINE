@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import HomeCard from "../component/HomeCard";
-import { useSelector } from "react-redux";
 import CardFeature from "../component/CardFeature";
-import FilteredProducts from "../component/FilteredProducts";
+import Allproducts from "../component/Allproducts";
 import { GrPrevious, GrNext } from "react-icons/gr";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const productData = useSelector((state) => state.product.productList);
@@ -64,6 +64,7 @@ const Home = () => {
                     key={el._id}
                     image={el.image}
                     name={el.name}
+                    id={el._id}
                     price={el.price}
                     category={el.category}
                   />
@@ -104,6 +105,7 @@ const Home = () => {
                     key={el._id}
                     name={el.name}
                     category={el.category}
+                    id={el._id}
                     price={el.price}
                     image={el.image}
                   />
@@ -114,19 +116,7 @@ const Home = () => {
               ))}
         </div>
       </div>
-
-      <div className="my-5">
-        <h2 className="font-bold text-2xl text-slate-800 mb-4">
-          Available Now
-        </h2>
-
-        <div className="flex gap-4 justify-center">
-          <FilteredProducts category="Kienyenji" />
-          <FilteredProducts />
-          <FilteredProducts />
-          <FilteredProducts />
-        </div>
-      </div>
+      <Allproducts heading={"Available Now"} />
     </div>
   );
 };
