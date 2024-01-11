@@ -13,7 +13,7 @@ const HomeCard = ({ name, image, category, price, loading, id }) => {
             <div className="w-40 min-h-[150px]">
               <img src={image} alt={name} className="h-full w-full" />
             </div>
-            <h3 className="font-semibold text-slate-600 text-center capitalize text-lg">
+            <h3 className="font-semibold text-slate-600 text-center capitalize text-sm">
               {name}
             </h3>
             <p className="text-center text-slate-500 font-md">{category}</p>

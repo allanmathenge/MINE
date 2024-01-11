@@ -41,10 +41,13 @@ const Header = () => {
           </nav>
 
           <div className="text-2xl text-slate-600 relative">
-            <FaShoppingCart />
-            <div className="absolute -top-1 -right-1 text-white bg-red-600 w-4 h-4 rounded-full text-sm text-center">
-              0
-            </div>
+            <Link to="cart">
+              <FaShoppingCart />
+
+              <div className="absolute -top-1 -right-1 text-white bg-red-600 w-4 h-4 rounded-full text-sm text-center">
+                0
+              </div>
+            </Link>
           </div>
 
           <div

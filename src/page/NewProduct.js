@@ -97,7 +97,7 @@ const NewProduct = () => {
           <option value={""}></option>
           <option value={"Broilers"}>Broilers</option>
           <option value={"Kienyeji"}>Kienyeji</option>
-          <option value={"Fruits"}>Fruits</option>
+          <option value={"Mixed"}>Mixed</option>
           <option value={"Vegetables"}>Vegetables</option>
         </select>
 
