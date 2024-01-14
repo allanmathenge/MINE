@@ -8,8 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
-  const productData = useSelector((state) => state.product);
-  console.log(productData);
+  useSelector((state) => state.product);
 
   useEffect(() => {
     (async () => {

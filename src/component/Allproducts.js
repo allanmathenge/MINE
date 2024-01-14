@@ -10,12 +10,14 @@ const Allproducts = ({ heading }) => {
   //Filter data display
 
   const [dataFilter, setDataFilter] = useState([]);
+  const [filterBy, setFilterBy] = useState("");
 
   useEffect(() => {
     setDataFilter(productData);
   }, [productData]);
 
   const handleFilterProduct = (category) => {
+    setFilterBy(category);
     const filter = productData.filter(
       (el) => el.category.toLowerCase() === category.toLowerCase()
     );
@@ -38,6 +40,7 @@ const Allproducts = ({ heading }) => {
               <FilteredProducts
                 category={el}
                 key={el}
+                isActive={el.toLowerCase() === filterBy.toLowerCase()}
                 onClick={() => handleFilterProduct(el)}
               />
             );

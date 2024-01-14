@@ -21,6 +21,8 @@ const Header = () => {
     toast("Logout successful!");
   };
 
+  const cartItemNumber = useSelector((state) => state.product.cartItem);
+
   return (
     <header className="fixed shadow-md w-full h-16 px-2 md:px-4 z-50 bg-white">
       {/* desktop */}
@@ -45,7 +47,7 @@ const Header = () => {
               <FaShoppingCart />
 
               <div className="absolute -top-1 -right-1 text-white bg-red-600 w-4 h-4 rounded-full text-sm text-center">
-                0
+                {cartItemNumber.length}
               </div>
             </Link>
           </div>

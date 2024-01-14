@@ -1,14 +1,20 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Allproducts from "../component/Allproducts";
+import { addCartItem } from "../redux/productSlice";
 
 const Menu = () => {
   const { filterBy } = useParams();
+  const dispatch = useDispatch();
 
   const productData = useSelector((state) => state.product.productList);
 
   const productDisplay = productData.filter((el) => el._id === filterBy)[0];
+
+  const handleAddCartProduct = () => {
+    dispatch(addCartItem(productDisplay));
+  };
 
   return (
     <div className="p-2 md:p-4">
@@ -34,14 +40,17 @@ const Menu = () => {
           </p>
 
           <div className="flex gap-3">
-            <button className="bg-yellow-500 py-1 my-2 hover:bg-yellow-600 rounded px-3 min-w-[100px]">
+            <button
+              onClick={handleAddCartProduct}
+              className="bg-yellow-500 py-1 my-2 hover:bg-yellow-600 rounded px-3 min-w-[100px]"
+            >
               Order
             </button>
             <button className="bg-yellow-500 py-1 my-2 hover:bg-yellow-600 rounded px-3 min-w-[100px]">
               Add Cart
             </button>
           </div>
-          <div className="flex gap-1">
+          <div className="flex gap-1 mb-3">
             <p className="text-slate-600 font-medium">Description:</p>
             <p>{productDisplay.description}</p>
           </div>
