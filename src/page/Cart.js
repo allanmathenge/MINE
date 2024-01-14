@@ -2,6 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CartProduct from "../component/CartProduct";
 import { BsFillCartXFill } from "react-icons/bs";
+import { toast } from "react-hot-toast";
+
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
   const productCartItem = useSelector((state) => state.product.cartItem);
@@ -15,6 +18,31 @@ const Cart = () => {
     (acc, curr) => acc + parseInt(curr.qty),
     0
   );
+
+  const handlePayment = async () => {
+    const stripePromise = await loadStripe(
+      process.env.REACT_APP_STRIPE_PUBLIC_KEY
+    );
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_DOMAIN}/checkout-payment`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(productCartItem),
+      }
+    );
+
+    if (res.statusCode === 500) return;
+
+    const data = await res.json();
+    console.log(data);
+
+    toast("Redirecting to payment Gateway...");
+
+    stripePromise.redirectToCheckout({ sessionId: data });
+  };
 
   return (
     <>
@@ -49,9 +77,7 @@ const Cart = () => {
 
               <div className="flex w-full text-lg py-2 border-b">
                 <p>Total Quantity: </p>
-                <p className="ml-auto w-32 font-bold">
-                  <span className="text-red-500">KES </span> {totalQty}
-                </p>
+                <p className="ml-auto w-32 font-bold">{totalQty}</p>
               </div>
 
               <div className="flex w-full text-lg py-2 border-b">
@@ -61,7 +87,10 @@ const Cart = () => {
                   {totalPrice}
                 </p>
               </div>
-              <button className="bg-red-500 w-full text-lg font-bold py-2 text-white">
+              <button
+                className="bg-red-500 w-full text-lg font-bold py-2 text-white"
+                onClick={handlePayment}
+              >
                 Pay
               </button>
             </div>
