@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Allproducts from "../component/Allproducts";
 import { addCartItem } from "../redux/productSlice";
@@ -7,6 +7,7 @@ import { addCartItem } from "../redux/productSlice";
 const Menu = () => {
   const { filterBy } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const productData = useSelector((state) => state.product.productList);
 
@@ -15,6 +16,11 @@ const Menu = () => {
   const handleAddCartProduct = () => {
     dispatch(addCartItem(productDisplay));
   };
+
+  const handleBuy = () => {
+    dispatch(addCartItem(productDisplay));
+    navigate("/cart")
+  }
 
   return (
     <div className="p-2 md:p-4">
@@ -41,12 +47,12 @@ const Menu = () => {
 
           <div className="flex gap-3">
             <button
-              onClick={handleAddCartProduct}
+              onClick={handleBuy}
               className="bg-yellow-500 py-1 my-2 hover:bg-yellow-600 rounded px-3 min-w-[100px]"
             >
               Order
             </button>
-            <button className="bg-yellow-500 py-1 my-2 hover:bg-yellow-600 rounded px-3 min-w-[100px]">
+            <button onClick={handleAddCartProduct} className="bg-yellow-500 py-1 my-2 hover:bg-yellow-600 rounded px-3 min-w-[100px]">
               Add Cart
             </button>
           </div>

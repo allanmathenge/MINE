@@ -3,11 +3,14 @@ import { useSelector } from "react-redux";
 import CartProduct from "../component/CartProduct";
 import { BsFillCartXFill } from "react-icons/bs";
 import { toast } from "react-hot-toast";
-
+import { useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const productCartItem = useSelector((state) => state.product.cartItem);
+
+  const user = useSelector((state) => state.user);
 
   const totalPrice = productCartItem.reduce(
     (acc, curr) => acc + parseInt(curr.total),
@@ -20,27 +23,34 @@ const Cart = () => {
   );
 
   const handlePayment = async () => {
-    const stripePromise = await loadStripe(
-      process.env.REACT_APP_STRIPE_PUBLIC_KEY
-    );
-    const res = await fetch(
-      `${process.env.REACT_APP_SERVER_DOMAIN}/checkout-payment`,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(productCartItem),
-      }
-    );
+    if (user.email) {
+      const stripePromise = await loadStripe(
+        process.env.REACT_APP_STRIPE_PUBLIC_KEY
+      );
+      const res = await fetch(
+        `${process.env.REACT_APP_SERVER_DOMAIN}/checkout-payment`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(productCartItem),
+        }
+      );
 
-    if (res.statusCode === 500) return;
+      if (res.statusCode === 500) return;
 
-    const data = await res.json();
+      const data = await res.json();
 
-    toast("Redirecting to payment Gateway...");
+      toast("Redirecting to payment Gateway...");
 
-    stripePromise.redirectToCheckout({ sessionId: data });
+      stripePromise.redirectToCheckout({ sessionId: data });
+    } else {
+      toast("You have not logged in...");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+    }
   };
 
   return (
