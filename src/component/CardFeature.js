@@ -14,7 +14,7 @@ const CardFeature = ({ image, name, price, category, loading, id }) => {
         price: price,
         category: category,
         image: image,
-      })
+      }),
     );
   };
 

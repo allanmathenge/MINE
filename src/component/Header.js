@@ -68,7 +68,7 @@ const Header = () => {
               )}
             </div>
             {showMenu && (
-              <div className="absolute right-2 bg-white py-2 shadow drop-shadow-md flex flex-col min-w-[120px] text-center">
+              <div className="absolute right-0 bg-slate-200 py-2 shadow drop-shadow-md flex flex-col min-w-full opacity-80 h-screen text-center mt-4">
                 {userData.email === process.env.REACT_APP_ADMIN_EMAIL && (
                   <Link to={"newproduct"} className="whitespace-nowrap px-2">
                     New product
@@ -77,31 +77,31 @@ const Header = () => {
 
                 {userData.image ? (
                   <p
-                    className="text-white bg-red-400 px-2"
+                    className="text-white bg-red-400 px-2 py-5 hover:bg-slate-200"
                     onClick={handleLogout}
                   >
                     Logout ({userData.firstName})
                   </p>
                 ) : (
-                  <Link to={"login"} className="whitespace-nowrap px-2">
+                  <Link
+                    to={"login"}
+                    className="whitespace-nowrap text-xl font-bold md:text-lg px-2 hover:bg-slate-200 py-4"
+                  >
                     Login
                   </Link>
                 )}
 
-                <nav className="text-base md:text-lg flex flex-col md:hidden">
-                  <Link to={""} className="px-2 py-1">
+                <nav className="text-xl font-bold md:text-lg flex flex-col md:hidden ">
+                  <Link to={""} className="px-2 py-5 hover:bg-slate-200">
                     Home
                   </Link>
-                  <Link
-                    to={"menu/659a26161337c91e6dfae3e8"}
-                    className="px-2 py-1"
-                  >
+                  <Link to={"menu"} className="px-2 py-5 hover:bg-slate-200">
                     Menu
                   </Link>
-                  <Link to={"about"} className="px-2 py-1">
+                  <Link to={"about"} className="px-2 py-5 hover:bg-slate-200">
                     About
                   </Link>
-                  <Link to={"contact"} className="px-2 py-1">
+                  <Link to={"contact"} className="px-2 py-5 hover:bg-slate-200">
                     Contact
                   </Link>
                 </nav>

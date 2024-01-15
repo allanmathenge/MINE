@@ -14,18 +14,18 @@ const Cart = () => {
 
   const totalPrice = productCartItem.reduce(
     (acc, curr) => acc + parseInt(curr.total),
-    0
+    0,
   );
 
   const totalQty = productCartItem.reduce(
     (acc, curr) => acc + parseInt(curr.qty),
-    0
+    0,
   );
 
   const handlePayment = async () => {
     if (user.email) {
       const stripePromise = await loadStripe(
-        process.env.REACT_APP_STRIPE_PUBLIC_KEY
+        process.env.REACT_APP_STRIPE_PUBLIC_KEY,
       );
       const res = await fetch(
         `${process.env.REACT_APP_SERVER_DOMAIN}/checkout-payment`,
@@ -35,7 +35,7 @@ const Cart = () => {
             "content-type": "application/json",
           },
           body: JSON.stringify(productCartItem),
-        }
+        },
       );
 
       if (res.statusCode === 500) return;

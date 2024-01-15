@@ -11,7 +11,7 @@ const Home = () => {
 
   const homeProductCartKienyeji = productData.filter(
     (el) => el.category === "Kienyeji",
-    []
+    [],
   );
 
   const loadingArray = new Array(4).fill(null);

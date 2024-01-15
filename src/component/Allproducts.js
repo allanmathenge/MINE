@@ -19,7 +19,7 @@ const Allproducts = ({ heading }) => {
   const handleFilterProduct = (category) => {
     setFilterBy(category);
     const filter = productData.filter(
-      (el) => el.category.toLowerCase() === category.toLowerCase()
+      (el) => el.category.toLowerCase() === category.toLowerCase(),
     );
 
     setDataFilter(() => {

@@ -47,7 +47,7 @@ const NewProduct = () => {
             "content-type": "application/json",
           },
           body: JSON.stringify(data),
-        }
+        },
       );
 
       const fetchRes = await FetchData.json();

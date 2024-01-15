@@ -63,7 +63,7 @@ const SignUp = () => {
               "content-type": "application/json",
             },
             body: JSON.stringify(data),
-          }
+          },
         );
 
         const dataRes = await fetchData.json();

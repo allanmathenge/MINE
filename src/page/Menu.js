@@ -7,7 +7,7 @@ import { addCartItem } from "../redux/productSlice";
 const Menu = () => {
   const { filterBy } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const productData = useSelector((state) => state.product.productList);
 
@@ -19,8 +19,8 @@ const Menu = () => {
 
   const handleBuy = () => {
     dispatch(addCartItem(productDisplay));
-    navigate("/cart")
-  }
+    navigate("/cart");
+  };
 
   return (
     <div className="p-2 md:p-4">
@@ -52,7 +52,10 @@ const Menu = () => {
             >
               Order
             </button>
-            <button onClick={handleAddCartProduct} className="bg-yellow-500 py-1 my-2 hover:bg-yellow-600 rounded px-3 min-w-[100px]">
+            <button
+              onClick={handleAddCartProduct}
+              className="bg-yellow-500 py-1 my-2 hover:bg-yellow-600 rounded px-3 min-w-[100px]"
+            >
               Add Cart
             </button>
           </div>
